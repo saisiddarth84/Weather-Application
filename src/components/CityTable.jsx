@@ -9,6 +9,7 @@ function CityTable() {
   const [start, setStart] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -39,7 +40,7 @@ function CityTable() {
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = containerRef.current;
-    const bottomMargin = 100; 
+    const bottomMargin = 100;
 
     if (scrollHeight - scrollTop - clientHeight < bottomMargin && hasMore) {
       setStart((prevStart) => prevStart + 40);
@@ -48,6 +49,9 @@ function CityTable() {
 
   const handleChange = (event, { newValue }) => {
     setSearchQuery(newValue);
+    if(event.target.value === ''){
+      setSelectedCity(null)
+    }
   };
 
   const handleSuggestionsFetchRequested = async ({ value }) => {
@@ -63,24 +67,38 @@ function CityTable() {
       setSuggestions(cityData);
     } catch (error) {
       console.error("Error fetching suggestions:", error);
-    } 
+    }
   };
 
   const handleSuggestionsClearRequested = () => {
     setSuggestions([]);
   };
 
+  const renderSuggestion = (suggestion) => (
+    <div
+      className="flex flex-col gap-y-4 cursor-pointer"
+      onClick={() => handleSuggestionSelected(suggestion)}
+    >
+      {suggestion.cityName}
+    </div>
+  );
+
+  const handleSuggestionSelected = (suggestion) => {
+    // Set the selected city when a suggestion is clicked
+    setSelectedCity(suggestion);
+  };
+
   const inputProps = {
     placeholder: "Search for a city...",
     value: searchQuery,
     onChange: handleChange,
-    className:"border-2 border-gray-200 p-2 w-96" 
+    className: "border-2 border-gray-200 p-2 w-96",
   };
 
   return (
     <div
       ref={containerRef}
-      className="overflow-y-auto h-800px"
+      className="overflow-y-auto h-800px shadow overflow-hidden rounded border-b border-gray-200"
       onScroll={handleScroll}
       style={{ maxHeight: "800px" }}
     >
@@ -94,29 +112,44 @@ function CityTable() {
         inputProps={inputProps}
       />
       <table className="min-w-full bg-white my-8">
-        <thead className="bg-gray-50">
+        <thead className="bg-gray-800">
           <tr>
             <th
               scope="col"
-              className="px-6 py-3  text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3  text-center text-xs font-medium text-white uppercase tracking-wider"
             >
               City Name
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-center text-xs font-medium  text-white  uppercase tracking-wider"
             >
               Country
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-center text-xs font-medium  text-white  uppercase tracking-wider"
             >
               Timezone
             </th>
           </tr>
         </thead>
-        <tbody>
+        {selectedCity ? (
+          <tbody>
+            <tr className="bg-white">
+              <td className="px-6 py-4 whitespace-nowrap">
+                {selectedCity.cityName}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {selectedCity.country}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {selectedCity.timezone}
+              </td>
+            </tr>
+          </tbody>
+        ) : (
+          <tbody>
           {cities.map((city, index) => (
             <tr
               key={index}
@@ -128,9 +161,10 @@ function CityTable() {
             </tr>
           ))}
         </tbody>
+        )}
       </table>
       {loading && <div className="text-center py-4">Loading...</div>}
-      {!loading && hasMore && (
+      {!loading && hasMore && !selectedCity && (
         <div className="text-center py-4">Loading more cities...</div>
       )}
       {!loading && !hasMore && (
