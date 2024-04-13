@@ -3,6 +3,7 @@ import axios from "axios";
 import Autosuggest from "react-autosuggest";
 import { UilAngleDown } from "@iconscout/react-unicons";
 import { UilAngleUp } from "@iconscout/react-unicons";
+import { Link } from "react-router-dom";
 
 function CityTable() {
   const [cities, setCities] = useState([]);
@@ -91,7 +92,6 @@ function CityTable() {
   );
 
   const handleSuggestionSelected = (suggestion) => {
-    // Set the selected city when a suggestion is clicked
     setSelectedCity(suggestion);
   };
 
@@ -221,7 +221,7 @@ function CityTable() {
                 className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
               >
                 <td className="px-6 py-4 whitespace-nowrap hover:text-blue-500 active:text-blue-200 cursor-pointer">
-                  {city.cityName}
+                  <Link to={"/city/" + city.cityName}>{city.cityName}</Link>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{city.country}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
