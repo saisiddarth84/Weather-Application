@@ -1,11 +1,11 @@
-import './App.css';
-import UilReact from '@iconscout/react-unicons/icons/uil-react'
+import "./App.css";
+import CityTable from "./components/CityTable";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className='text-2xl'>Hello world</h1>
-      <UilReact/>
+    <div className="w-2/3 text-center mx-auto">
+        <Outlet />
     </div>
   );
 }
