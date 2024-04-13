@@ -68,6 +68,8 @@ function CityTable() {
         cityName: record.fields.name,
         country: record.fields.cou_name_en,
         timezone: record.fields.timezone,
+        population: record.fields.population,
+        countryCode: record.fields.country_code,
       }));
       setSuggestions(cityData);
     } catch (error) {
@@ -127,7 +129,7 @@ function CityTable() {
               <div className="absolute top-[30%] left-[80%]">
                 <div
                   onClick={() => {
-                    if(sort !== "-name") setCities([]) 
+                    if (sort !== "-name") setCities([]);
                     setSort("-name");
                   }}
                   className="absolute top-[-4px] hover:text-amber-200  cursor-pointer"
@@ -136,7 +138,7 @@ function CityTable() {
                 </div>
                 <div
                   onClick={() => {
-                   if(sort !== "name") setCities([]);
+                    if (sort !== "name") setCities([]);
                     setSort("name");
                   }}
                   className="absolute top-[10px]  hover:text-amber-200  cursor-pointer"
@@ -159,7 +161,7 @@ function CityTable() {
               <div className="absolute top-[30%] left-[90%]">
                 <div
                   onClick={() => {
-                   if(sort !== "population") setCities([]);
+                    if (sort !== "population") setCities([]);
                     setSort("population");
                   }}
                   className="absolute top-[-4px]  hover:text-amber-200  cursor-pointer"
@@ -168,7 +170,7 @@ function CityTable() {
                 </div>
                 <div
                   onClick={() => {
-                   if(sort !== "-population") setCities([]);
+                    if (sort !== "-population") setCities([]);
                     setSort("-population");
                   }}
                   className="absolute top-[10px]  hover:text-amber-200  cursor-pointer"
@@ -193,7 +195,7 @@ function CityTable() {
         </thead>
         {selectedCity ? (
           <tbody>
-            <tr className="bg-white">
+            <tr className="bg-white cursor-pointer">
               <td className="px-6 py-4 whitespace-nowrap">
                 {selectedCity.cityName}
               </td>
@@ -201,7 +203,13 @@ function CityTable() {
                 {selectedCity.country}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
+                {selectedCity.population}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
                 {selectedCity.timezone}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {selectedCity.countryCode}
               </td>
             </tr>
           </tbody>
@@ -212,7 +220,9 @@ function CityTable() {
                 key={index}
                 className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
               >
-                <td className="px-6 py-4 whitespace-nowrap">{city.cityName}</td>
+                <td className="px-6 py-4 whitespace-nowrap hover:text-blue-500 active:text-blue-200 cursor-pointer">
+                  {city.cityName}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">{city.country}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {city.population}
