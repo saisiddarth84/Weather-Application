@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Autosuggest from "react-autosuggest";
+import { UilAngleDown } from "@iconscout/react-unicons";
+import { UilAngleUp } from "@iconscout/react-unicons";
 
 function CityTable() {
   const [cities, setCities] = useState([]);
@@ -10,6 +12,7 @@ function CityTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
+  const [sort, setSort] = useState("name");
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -17,12 +20,14 @@ function CityTable() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `https://public.opendatasoft.com/api/records/1.0/search/?rows=40&disjunctive.cou_name_en=true&sort=name&start=${start}&fields=geoname_id,name,cou_name_en,ascii_name,alternate_names,population,dem,timezone,country_code,coordinates&dataset=geonames-all-cities-with-a-population-1000&timezone=Asia%2FKolkata&lang=en`
+          `https://public.opendatasoft.com/api/records/1.0/search/?rows=40&disjunctive.cou_name_en=true&sort=${sort}&start=${start}&fields=geoname_id,name,cou_name_en,ascii_name,alternate_names,population,dem,timezone,country_code,coordinates&dataset=geonames-all-cities-with-a-population-1000&timezone=Asia%2FKolkata&lang=en`
         );
         const cityData = response.data.records.map((record) => ({
           cityName: record.fields.name,
           country: record.fields.cou_name_en,
           timezone: record.fields.timezone,
+          population: record.fields.population,
+          countryCode: record.fields.country_code,
         }));
         setCities((prevCities) => [...prevCities, ...cityData]);
         setLoading(false);
@@ -36,7 +41,7 @@ function CityTable() {
     };
 
     fetchData();
-  }, [start]);
+  }, [start, sort]);
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = containerRef.current;
@@ -49,8 +54,8 @@ function CityTable() {
 
   const handleChange = (event, { newValue }) => {
     setSearchQuery(newValue);
-    if(event.target.value === ''){
-      setSelectedCity(null)
+    if (event.target.value === "") {
+      setSelectedCity(null);
     }
   };
 
@@ -116,21 +121,73 @@ function CityTable() {
           <tr>
             <th
               scope="col"
-              className="px-6 py-3  text-center text-xs font-medium text-white uppercase tracking-wider"
+              className="px-6 py-6 relative  text-center text-[16px] font-medium text-white uppercase tracking-wider"
             >
-              City Name
+              CityName
+              <div className="absolute top-[30%] left-[80%]">
+                <div
+                  onClick={() => {
+                    if(sort !== "-name") setCities([]) 
+                    setSort("-name");
+                  }}
+                  className="absolute top-[-4px] hover:text-amber-200  cursor-pointer"
+                >
+                  <UilAngleUp />
+                </div>
+                <div
+                  onClick={() => {
+                   if(sort !== "name") setCities([]);
+                    setSort("name");
+                  }}
+                  className="absolute top-[10px]  hover:text-amber-200  cursor-pointer"
+                >
+                  <UilAngleDown />
+                </div>
+              </div>
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-center text-xs font-medium  text-white  uppercase tracking-wider"
+              className="px-6 py-3 relative text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
             >
               Country
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-center text-xs font-medium  text-white  uppercase tracking-wider"
+              className="px-6 relative py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
+            >
+              Population
+              <div className="absolute top-[30%] left-[90%]">
+                <div
+                  onClick={() => {
+                   if(sort !== "population") setCities([]);
+                    setSort("population");
+                  }}
+                  className="absolute top-[-4px]  hover:text-amber-200  cursor-pointer"
+                >
+                  <UilAngleUp />
+                </div>
+                <div
+                  onClick={() => {
+                   if(sort !== "-population") setCities([]);
+                    setSort("-population");
+                  }}
+                  className="absolute top-[10px]  hover:text-amber-200  cursor-pointer"
+                >
+                  <UilAngleDown />
+                </div>
+              </div>
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
             >
               Timezone
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
+            >
+              Country Code
             </th>
           </tr>
         </thead>
@@ -150,17 +207,23 @@ function CityTable() {
           </tbody>
         ) : (
           <tbody>
-          {cities.map((city, index) => (
-            <tr
-              key={index}
-              className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-            >
-              <td className="px-6 py-4 whitespace-nowrap">{city.cityName}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{city.country}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{city.timezone}</td>
-            </tr>
-          ))}
-        </tbody>
+            {cities.map((city, index) => (
+              <tr
+                key={index}
+                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+              >
+                <td className="px-6 py-4 whitespace-nowrap">{city.cityName}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{city.country}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {city.population}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{city.timezone}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {city.countryCode}
+                </td>
+              </tr>
+            ))}
+          </tbody>
         )}
       </table>
       {loading && <div className="text-center py-4">Loading...</div>}
