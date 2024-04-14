@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import CityTable from "./components/CityTable";
-import WhetherInfo from "./components/WhetherInfo";
+import WeatherInfo from "./components/WeatherInfo";
 
 const appRouter = createBrowserRouter([
   {
@@ -16,8 +16,8 @@ const appRouter = createBrowserRouter([
         element: <CityTable />
       },
       {
-        path: "/city/:cityName",
-        element: <WhetherInfo />
+        path: "/city/:cityName/:timezone/:cityZone",
+        element: <WeatherInfo />
       }
     ]
   }

@@ -1,5 +1,4 @@
 import "./App.css";
-import CityTable from "./components/CityTable";
 import { Outlet } from "react-router-dom";
 
 function App() {
