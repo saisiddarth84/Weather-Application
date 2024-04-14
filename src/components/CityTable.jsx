@@ -196,8 +196,8 @@ function CityTable() {
         {selectedCity ? (
           <tbody>
             <tr className="bg-white cursor-pointer">
-              <td className="px-6 py-4 whitespace-nowrap">
-                {selectedCity.cityName}
+              <td className="px-6 py-4 whitespace-nowrap  hover:text-blue-500 active:text-blue-200">
+              <Link to={"/city/" + selectedCity.cityName + "/" + selectedCity.timezone}>{selectedCity.cityName}</Link>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {selectedCity.country}
@@ -221,7 +221,7 @@ function CityTable() {
                 className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
               >
                 <td className="px-6 py-4 whitespace-nowrap hover:text-blue-500 active:text-blue-200 cursor-pointer">
-                  <Link to={"/city/" + city.cityName}>{city.cityName}</Link>
+                  <Link to={"/city/" + city.cityName +"/"+ city.timezone}>{city.cityName}</Link>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{city.country}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
