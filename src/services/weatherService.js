@@ -16,7 +16,6 @@ const formatCurrentWeather = (data) => {
   const {
     main: { temp, feels_like, temp_min, temp_max, humidity, pressure },
     name,
-    dt,
     sys: { country, sunrise, sunset },
     weather,
     wind: { speed },
