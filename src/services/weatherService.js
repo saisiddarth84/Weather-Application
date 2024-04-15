@@ -14,7 +14,6 @@ const getWeatherData = (infoType, searchParams) => {
 
 const formatCurrentWeather = (data) => {
   const {
-    coord: { lat, lon },
     main: { temp, feels_like, temp_min, temp_max, humidity, pressure },
     name,
     dt,
@@ -26,15 +25,12 @@ const formatCurrentWeather = (data) => {
   const { main: details, icon } = weather[0];
 
   return {
-    lat,
-    lon,
     temp,
     feels_like,
     temp_min,
     temp_max,
     humidity,
     name,
-    dt,
     country,
     sunrise,
     sunset,
@@ -51,8 +47,6 @@ const getFormattedWeatherData = async (searchParams) => {
     "weather",
     searchParams
   ).then(formatCurrentWeather);
-
-  const { lat, lon } = formattedCurrentWeather;
 
   return { ...formattedCurrentWeather};
 };

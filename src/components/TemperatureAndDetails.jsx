@@ -27,7 +27,6 @@ function TemperatureAndDetails({
 }) {
   const { timezone, cityZone } = useParams();
 
-
   return (
     <div>
       <div className="flex items-center justify-center py-6 text-cyan-300">
@@ -42,15 +41,16 @@ function TemperatureAndDetails({
             <UilSun size={18} className="mr-1 " />
             Rise:
             <span className="font-medium ml-1">
-            {formatToLocalTime(sunrise, timezone + "/" + cityZone, "hh:mm a")}
+              {formatToLocalTime(sunrise, timezone + "/" + cityZone, "hh:mm a")}
             </span>
           </div>
           <div className="flex font-light text-sm items-center justify-center">
             <UilSunset size={18} className="mr-1" />
             Set:
-            <span className="font-medium ml-1">{formatToLocalTime(sunset, timezone + "/" + cityZone, "hh:mm a")}</span>
+            <span className="font-medium ml-1">
+              {formatToLocalTime(sunset, timezone + "/" + cityZone, "hh:mm a")}
+            </span>
           </div>
-       
         </div>
       </div>
 
@@ -79,7 +79,7 @@ function TemperatureAndDetails({
           </div>
           <div>Wind</div>
           <div className="font-medium text-3xl ml-1">
-          {`${speed.toFixed()}`}km/h
+            {`${speed.toFixed()}`}km/h
           </div>
         </div>
         <div className="flex flex-col justify-center items-center gap-2 w-56 p-4 px-12 shadow-xl rounded-lg text-2xl font-semibold  bg-blue-400">
@@ -88,7 +88,7 @@ function TemperatureAndDetails({
           </div>
           <div>Pressure</div>
           <div className="font-medium text-3xl ml-1">
-          {`${pressure.toFixed()}`}hpa
+            {`${pressure.toFixed()}`}hpa
           </div>
         </div>
         <div className="flex flex-col justify-center items-center gap-2 w-56 p-4 px-12 shadow-xl rounded-lg text-2xl font-semibold  bg-blue-400">
@@ -106,10 +106,9 @@ function TemperatureAndDetails({
           </div>
           <div>Humidity</div>
           <div className="font-medium text-3xl ml-1">
-          {`${humidity.toFixed()}`}%
+            {`${humidity.toFixed()}`}%
           </div>
         </div>
-       
       </div>
     </div>
   );
