@@ -107,7 +107,7 @@ function CityTable() {
       ref={containerRef}
       className="overflow-y-auto h-800px shadow overflow-hidden rounded border-b border-gray-200"
       onScroll={handleScroll}
-      style={{ maxHeight: "800px" }}
+      style={{ maxHeight: "100vh" }}
     >
       <h1 className="text-2xl font-semibold my-8">My Whether Application</h1>
       <Autosuggest
@@ -196,8 +196,8 @@ function CityTable() {
         {selectedCity ? (
           <tbody>
             <tr className="bg-white cursor-pointer">
-              <td className="px-6 py-4 whitespace-nowrap  hover:text-blue-500 active:text-blue-200">
-              <Link to={"/city/" + selectedCity.cityName + "/" + selectedCity.timezone}>{selectedCity.cityName}</Link>
+              <td className="px-6 py-4 whitespace-nowrap  ">
+              <Link to={"/city/" + selectedCity.cityName + "/" + selectedCity.timezone}><span className="hover:text-blue-500 active:text-blue-200 cursor-pointer">{selectedCity.cityName}</span></Link>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {selectedCity.country}
@@ -220,8 +220,8 @@ function CityTable() {
                 key={index}
                 className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
               >
-                <td className="px-6 py-4 whitespace-nowrap hover:text-blue-500 active:text-blue-200 cursor-pointer">
-                  <Link to={"/city/" + city.cityName +"/"+ city.timezone}>{city.cityName}</Link>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <Link to={"/city/" + city.cityName +"/"+ city.timezone}><span className=" hover:text-blue-500 active:text-blue-200 cursor-pointer">{city.cityName}</span></Link>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{city.country}</td>
                 <td className="px-6 py-4 whitespace-nowrap">

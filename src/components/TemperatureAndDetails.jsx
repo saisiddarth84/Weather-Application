@@ -11,7 +11,9 @@ import { formatToLocalTime, iconUrlFromCode } from "../services/weatherService";
 import { useParams } from "react-router-dom";
 
 function TemperatureAndDetails({
-  weather: {
+  weather
+}) {
+  const  {
     details,
     icon,
     temp,
@@ -22,10 +24,13 @@ function TemperatureAndDetails({
     speed,
     humidity,
     feels_like,
-    pressure,
-  },
-}) {
+    pressure
+  } = weather;
   const { timezone, cityZone } = useParams();
+
+  if(weather[0] === "c"){
+    return <div className="text-3xl text-red-600">Oops! City not found...</div>
+  }
 
   return (
     <div>

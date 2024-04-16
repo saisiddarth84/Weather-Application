@@ -12,11 +12,11 @@ function TimeAndLocation({weather: { name, country}}) {
         </p>
       </div>
 
-      <div className="flex items-center justify-center my-3">
+      {name && (<div className="flex items-center justify-center my-3">
         <p className="text-gray-800  text-4xl font-medium">
           {`${name},${country}`}
-        </p>
-      </div>
+        </p> 
+      </div>)}
     </div>
   );
 }
