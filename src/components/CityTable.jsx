@@ -105,11 +105,10 @@ function CityTable() {
   return (
     <div
       ref={containerRef}
-      className="overflow-y-auto h-800px shadow overflow-hidden rounded border-b border-gray-200"
+      className="overflow-y-auto h-screen shadow overflow-hidden rounded border-b border-gray-200"
       onScroll={handleScroll}
-      style={{ maxHeight: "100vh" }}
     >
-      <h1 className="text-2xl font-semibold my-8">My Whether Application</h1>
+      <h1 className="text-2xl font-semibold my-8 text-center">My Whether Application</h1>
       <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
@@ -118,124 +117,126 @@ function CityTable() {
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
       />
-      <table className="min-w-full bg-white my-8">
-        <thead className="bg-gray-800">
-          <tr>
-            <th
-              scope="col"
-              className="px-6 py-6 relative  text-center text-[16px] font-medium text-white uppercase tracking-wider"
-            >
-              CityName
-              <div className="absolute top-[30%] left-[80%]">
-                <div
-                  onClick={() => {
-                    if (sort !== "-name") setCities([]);
-                    setSort("-name");
-                  }}
-                  className="absolute top-[-4px] hover:text-amber-200  cursor-pointer"
-                >
-                  <UilAngleUp />
-                </div>
-                <div
-                  onClick={() => {
-                    if (sort !== "name") setCities([]);
-                    setSort("name");
-                  }}
-                  className="absolute top-[10px]  hover:text-amber-200  cursor-pointer"
-                >
-                  <UilAngleDown />
-                </div>
-              </div>
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 relative text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
-            >
-              Country
-            </th>
-            <th
-              scope="col"
-              className="px-6 relative py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
-            >
-              Population
-              <div className="absolute top-[30%] left-[90%]">
-                <div
-                  onClick={() => {
-                    if (sort !== "population") setCities([]);
-                    setSort("population");
-                  }}
-                  className="absolute top-[-4px]  hover:text-amber-200  cursor-pointer"
-                >
-                  <UilAngleUp />
-                </div>
-                <div
-                  onClick={() => {
-                    if (sort !== "-population") setCities([]);
-                    setSort("-population");
-                  }}
-                  className="absolute top-[10px]  hover:text-amber-200  cursor-pointer"
-                >
-                  <UilAngleDown />
-                </div>
-              </div>
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
-            >
-              Timezone
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
-            >
-              Country Code
-            </th>
-          </tr>
-        </thead>
-        {selectedCity ? (
-          <tbody>
-            <tr className="bg-white cursor-pointer">
-              <td className="px-6 py-4 whitespace-nowrap  ">
-              <Link to={"/city/" + selectedCity.cityName + "/" + selectedCity.timezone}><span className="hover:text-blue-500 active:text-blue-200 cursor-pointer">{selectedCity.cityName}</span></Link>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {selectedCity.country}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {selectedCity.population}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {selectedCity.timezone}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {selectedCity.countryCode}
-              </td>
-            </tr>
-          </tbody>
-        ) : (
-          <tbody>
-            {cities.map((city, index) => (
-              <tr
-                key={index}
-                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+      <div className="overflow-x-auto">
+        <table className=" bg-white my-8">
+          <thead className="bg-gray-800">
+            <tr>
+              <th
+                scope="col"
+                className="px-6 py-6 relative  text-center text-[16px] font-medium text-white uppercase tracking-wider"
               >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Link to={"/city/" + city.cityName +"/"+ city.timezone}><span className=" hover:text-blue-500 active:text-blue-200 cursor-pointer">{city.cityName}</span></Link>
+                CityName
+                <div className="absolute top-[30%] left-[80%]">
+                  <div
+                    onClick={() => {
+                      if (sort !== "-name") setCities([]);
+                      setSort("-name");
+                    }}
+                    className="absolute top-[-4px] hover:text-amber-200  cursor-pointer"
+                  >
+                    <UilAngleUp />
+                  </div>
+                  <div
+                    onClick={() => {
+                      if (sort !== "name") setCities([]);
+                      setSort("name");
+                    }}
+                    className="absolute top-[10px]  hover:text-amber-200  cursor-pointer"
+                  >
+                    <UilAngleDown />
+                  </div>
+                </div>
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 relative text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
+              >
+                Country
+              </th>
+              <th
+                scope="col"
+                className="px-6 relative py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
+              >
+                Population
+                <div className="absolute top-[30%] left-[90%]">
+                  <div
+                    onClick={() => {
+                      if (sort !== "population") setCities([]);
+                      setSort("population");
+                    }}
+                    className="absolute top-[-4px]  hover:text-amber-200  cursor-pointer"
+                  >
+                    <UilAngleUp />
+                  </div>
+                  <div
+                    onClick={() => {
+                      if (sort !== "-population") setCities([]);
+                      setSort("-population");
+                    }}
+                    className="absolute top-[10px]  hover:text-amber-200  cursor-pointer"
+                  >
+                    <UilAngleDown />
+                  </div>
+                </div>
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
+              >
+                Timezone
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-[16px] font-medium  text-white  uppercase tracking-wider"
+              >
+                Country Code
+              </th>
+            </tr>
+          </thead>
+          {selectedCity ? (
+            <tbody>
+              <tr className="bg-white cursor-pointer">
+                <td className="px-6 py-4 whitespace-nowrap  ">
+                  <Link to={"/city/" + selectedCity.cityName + "/" + selectedCity.timezone}><span className="hover:text-blue-500 active:text-blue-200 cursor-pointer">{selectedCity.cityName}</span></Link>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{city.country}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {city.population}
+                  {selectedCity.country}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{city.timezone}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {city.countryCode}
+                  {selectedCity.population}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {selectedCity.timezone}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {selectedCity.countryCode}
                 </td>
               </tr>
-            ))}
-          </tbody>
-        )}
-      </table>
+            </tbody>
+          ) : (
+            <tbody>
+              {cities.map((city, index) => (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Link to={"/city/" + city.cityName +"/"+ city.timezone}><span className=" hover:text-blue-500 active:text-blue-200 cursor-pointer">{city.cityName}</span></Link>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{city.country}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {city.population}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{city.timezone}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {city.countryCode}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </table>
+      </div>
       {loading && <div className="text-center py-4">Loading...</div>}
       {!loading && hasMore && !selectedCity && (
         <div className="text-center py-4">Loading more cities...</div>
